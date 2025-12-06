@@ -13,11 +13,18 @@
 </section>
 
 <!-- Text container for journal entries-->
-<div class = "text-container">
+<form> <!--Use the phrase   <form onsubmit = "return false;">   if you don't want the webpage to reload after submitting-->
 
-        <label for = "journalEntry">Write your entry here: </label>
-        <textarea id = "journalEntry" placeholder="Dear diary..."></textarea>
+        <div class = "text-container">
 
-</div>
+                <label for = "journalEntry">Write your entry here: </label>
+                <textarea id = "journalEntry" placeholder="Dear diary..."></textarea>
+
+        </div>
+
+        <div class = "button-container">
+                <button type = "submit" class = "button_class">Publish</button>
+        </div>
+</form>
 
 {% endblock %}
