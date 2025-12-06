@@ -1,0 +1,149 @@
+
+.layout{
+    display: flex;
+    min-height: 90vh;
+}
+
+body{
+    font-family: "Roboto", sans-serif;
+    background-color:#1D1E18
+}
+
+h2{
+    font-size:48px;
+    text-align: center;
+    font-family: "EB Garamond", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color:rgb(255, 255, 255);
+    letter-spacing: 3px;
+    animation: pulse-glow 3.5s infinite alternate;
+
+}
+
+@keyframes pulse-glow {
+  0% {
+    text-shadow: 
+      0 0 10px #3f653a, 
+      0 0 10px rgb(197, 249, 170), 
+      0 0 50px rgb(197, 249, 170);
+  }
+  100% {
+    text-shadow: 
+      0 0 10px #3f653a, 
+      0 0 20px rgb(197, 249, 170), 
+      0 0 60px rgb(197, 249, 170);
+  }
+}
+
+nav{
+    background-image: linear-gradient(#90b3a2, #8bb39f);
+    width: 200px;
+    padding-top: 1rem;
+}
+
+nav ul{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; 
+    opacity: 80%;
+}
+
+nav ul li{
+    list-style: none;
+}
+
+nav li a{
+    text-decoration: none;
+    color:#1D1E18;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.icon_wrap img{
+    transition: filter 10.0 ease;
+}
+
+.icon_wrap img:hover{
+    filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 16px #c5ffd1);
+}
+
+nav img{
+    margin: 0 auto;
+}
+
+main{
+    flex: 1;
+    background-image: linear-gradient(#64896a, #314534);
+    padding: 4rem;
+    color:rgb(219, 244, 218);
+    font-family: "Spectral", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 22px;
+    text-align: center;
+}
+
+footer{
+    background-color: #4d6c5c;
+    min-height:5vh;
+    padding: 1rem 0rem 0rem 0rem;
+    color:rgb(193, 225, 190);
+    font-size: 14px;
+    font-family: "Kedebideri", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+}
+
+.card{
+    background: rgba(44, 59, 40, 0.75);
+    border-radius: 16px;
+    padding:2rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.text-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 2rem auto;
+}
+
+.text-container label{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.text-container textarea {
+    min-height: 200px;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 2px solid #6b8f71;
+    border-radius: 8px;
+    resize: vertical;
+    background: #d9f1d1;
+}
+
+.text-container textarea:focus{
+    outline: none;
+    border-color: #29488c;
+    box-shadow: 0 0 20px #b2d2a8;
+}
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-track{
+    background: #1D1E18;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #90b3a2;
+    border-radius: 10px;
+}
