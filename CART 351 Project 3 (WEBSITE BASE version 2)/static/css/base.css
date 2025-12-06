@@ -135,6 +135,29 @@ footer{
     box-shadow: 0 0 20px #b2d2a8;
 }
 
+.button-container{
+    margin-top: 15px;
+}
+
+.button_class{
+    padding: 10px 20px;
+    background-color: #9cc4b0;
+    color: #41442d;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: "Spectral", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 22px;
+    transition: filter 10.0 ease;
+}
+
+.button_class:hover{
+    background-color: #badbcb;
+    filter: drop-shadow(0 0 8px #7e9f8f) drop-shadow(0 0 8px #7e9f8f);
+}
+
 ::-webkit-scrollbar{
     width:10px;
 }
