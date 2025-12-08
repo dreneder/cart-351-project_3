@@ -1,6 +1,10 @@
 <!-- A child of base.html-->
 {% extends "base.html" %}
 
+{% block scriptBlock %}
+        <script src="{{url_for('static',filename='js/formScript.js')}}"></script>
+{% endblock scriptBlock %}
+
 {% block content %}
    
 <section>
@@ -8,22 +12,29 @@
 
         <h2><img height="200" src="static/images/CART_351_Append_Page_Icon.png" class="pageIcon"></h2>
         <!-- Content for submit entry page -->
-        <div class = "card">
-        <p>Write and submit your journal entry in the textbox below. The message can be personal and heartfelt, superficial and hollow, abstract and experiemental - whatever your heart desires.</div>
+        <div class = "card" id = "start-container">
+                <p>Write and submit your journal entry in the textbox below. The message can be personal and heartfelt, superficial and hollow, abstract and experiemental - whatever your heart desires.</p>
+        </div>
+        <div class = "button-container">
+                <button class = "button_class" id = "start-button">Begin</button>
+        </div>
 </section>
 
 <!-- Text container for journal entries-->
 <form> <!--Use the phrase   <form onsubmit = "return false;">   if you don't want the webpage to reload after submitting-->
 
+        <div class = "form-container" id = "form-container">
         <div class = "text-container">
 
+                <label for = "username">Your name: </label>
+                <input id = "username"></input>
                 <label for = "journalEntry">Write your entry here: </label>
                 <textarea id = "journalEntry" placeholder="Dear diary..."></textarea>
-
         </div>
 
         <div class = "button-container">
                 <button type = "submit" class = "button_class">Publish</button>
+        </div>
         </div>
 </form>
 
