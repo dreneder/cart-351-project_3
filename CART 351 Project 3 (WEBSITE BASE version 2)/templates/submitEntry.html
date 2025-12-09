@@ -12,16 +12,27 @@
 
         <h2><img height="200" src="static/images/CART_351_Append_Page_Icon.png" class="pageIcon"></h2>
         <!-- Content for submit entry page -->
-        <div class = "card" id = "start-container">
-                <p>Write and submit your journal entry in the textbox below. The message can be personal and heartfelt, superficial and hollow, abstract and experiemental - whatever your heart desires.</p>
+        <div id = "start-container">
+                <div class = "card">
+                        <p>Write and submit your journal entry in the textbox below. The message can be personal and heartfelt, superficial and hollow, abstract and experiemental - whatever your heart desires.</p>
+                </div>
+                <div class = "button-container">
+                        <button class = "button_class" id = "start-button">Begin</button>
+                </div>
         </div>
-        <div class = "button-container">
-                <button class = "button_class" id = "start-button">Begin</button>
+        <!-- Will only appear when the button is clicked -->
+        <div id = "form-result">
+                <div class = "card">
+                        <p>Your entry was <i>percentage to insert</i> positive, we will have a few more variables to modify this message.</p>
+                </div>
+                <div class = "button-container">
+                        <button class = "button_class" id = "start-button">Write another entry</button>
+                </div>
         </div>
 </section>
 
 <!-- Text container for journal entries-->
-<form> <!--Use the phrase   <form onsubmit = "return false;">   if you don't want the webpage to reload after submitting-->
+<form id = "entry-form">
 
         <div class = "form-container" id = "form-container">
         <div class = "text-container">
