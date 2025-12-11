@@ -8,9 +8,15 @@
         <link rel="stylesheet" href="../static/css/base.css">
         <link rel="icon" href="static/images/CART_351_Floral_Design_1.png"> <!--Adds a website icon to the tab-->
 
+        <!-- loading some scripts -->
+        <script src="{{url_for('static',filename='js/p5_lib/p5.min.js')}}"></script>
+        <script src="{{url_for('static',filename='js/p5_lib/p5.sound.min.js')}}"></script>
+        <script src="https://unpkg.com/ml5@1/dist/ml5.js"></script>
+
         <title>Journal Mood Analyzer</title>
         
-        {% block scriptBlock %}{% endblock scriptBlock %}
+        {% block scriptBlock %}
+        {% endblock scriptBlock %}
     </head>
 
     <body>
