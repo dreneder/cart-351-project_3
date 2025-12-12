@@ -7,7 +7,9 @@ let sentiment;
 let sentimentResult;
 let sentimentReady = false;
 
-window.onload = function () {
+window.onload = async function () {
+
+
     
     console.log("script loaded");
 
@@ -20,6 +22,17 @@ window.onload = function () {
     const entryForm = this.document.querySelector("#entry-form");
     const usernameInput = this.document.getElementById("username");
     const journalInput = this.document.getElementById("journalEntry");
+
+    //OWEN - moved from preload b/c dosnt load in non p5
+
+    // Initialize the sentiment analysis model
+    sentiment = await ml5.sentiment("movieReviews");
+    console.log("Sentiment object created:", sentiment);
+    sentimentReady = true;
+    console.log("sentiment model ready");   
+    
+
+
 
     // if (startContainer) startContainer.style.display = "";
     if (formContainer) formContainer.style.display = "none";
@@ -48,6 +61,8 @@ window.onload = function () {
                 const formData = new FormData(event.target);
                 username = formData.get("username");
                 entry = formData.get("journalEntry");
+                console.log( entry + " Entry being judged");
+                
                 lastUsername = username || "";
                 
                 // shows results
@@ -74,25 +89,49 @@ window.onload = function () {
     }
 }
 
-function preload() {
-      // Initialize the sentiment analysis model
-      sentiment = ml5.sentiment("MovieReviews", () => {
-  sentimentReady = true;
-  console.log("sentiment model ready");
-});
-}
+// function preload() {
+//     // Initialize the sentiment analysis model
+//     sentiment = ml5.sentiment("MovieReviews", () => {
+//     sentimentReady = true;
+//     console.log("sentiment model ready");
+//     });
+// }
 
-function setup() {
-    noCanvas();
-}
+// function setup() {
+//     noCanvas();
+// }
 
-function getSentiment() {
+async function getSentiment() {
     console.log(sentimentReady);
-//   if (!sentimentReady || !sentiment) return;
-//   if (!entry) return;
-  const prediction = sentiment.predict(entry);
-  if (prediction && typeof prediction.score === "number") {
-    sentimentResult = prediction.score; // store if you need it
-    console.log("sentiment score:", prediction.score);
-  }
+
+    //edge case checks
+    if (!sentimentReady || !sentiment){
+        console.log("model not ready");
+        return;
+    } 
+    if (!entry){
+        console.log("no entry");
+        return;
+    }
+    console.log("through cases");
+    
+    
+
+    let prediction = await sentiment.predict(entry);
+    console.log("prediction object:"+ prediction);
+    console.log("prediction score:"+ prediction.score);
+    console.log("prediction confidence:"+ prediction.confidence);
+
+    if (prediction && typeof prediction.score === "number") {
+        sentimentResult = prediction.score; // store if you need it
+        console.log("sentiment score:", prediction.score);
+    }
+
+function predictCallback() {
+    console.log("worked, Sentiment confidence: " + prediction.confidence);
+    return;
+    
+}
+
+
 }
