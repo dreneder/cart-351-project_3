@@ -23,6 +23,8 @@ window.onload = async function () {
     const entryForm = this.document.querySelector("#entry-form");
     const usernameInput = this.document.getElementById("username");
     const journalInput = this.document.getElementById("journalEntry");
+    const sentimentResultFeedback = this.document.getElementById("percentageToInsert");
+    const bufferContainer = this.document.getElementById("await-result");
 
     //OWEN - moved from preload b/c dosnt load in non p5
 
@@ -38,6 +40,7 @@ window.onload = async function () {
     // if (startContainer) startContainer.style.display = "";
     if (formContainer) formContainer.style.display = "none";
     if (resultContainer) resultContainer.style.display = "none";
+    if (bufferContainer) bufferContainer.style.display = "none";
 
     // start button logic can be used to write the first or more entries
     if (startButton) {
@@ -66,23 +69,27 @@ window.onload = async function () {
                 
                 lastUsername = username || "";
                 
-                // shows results
-                resultContainer.style.display = "";
                 formContainer.style.display = "none";
-                event.target.reset();
-
-
-
+                bufferContainer.style.display = "";
 
 
                 // clear entry but keep name
                 if (lastUsername && usernameInput) usernameInput.value = lastUsername;
                 let sentimentValue = await getSentiment();
 
-                                //check predictions work in different scope, also find what values to take?
+                //check predictions work in different scope, also find what values to take?
                 console.log("prediction object:"+ prediction);
                 console.log("prediction score:"+ prediction.score);
                 console.log("prediction confidence:"+ prediction.confidence);
+
+                // shows results
+                bufferContainer.style.display = "none";
+                resultContainer.style.display = "";
+                formContainer.style.display = "none";
+                event.target.reset();
+
+                //update the HTML page to show confidence 
+                sentimentResultFeedback.innerHTML = "<i id = \" percentageToInsert\"> "+(Math.ceil(prediction.confidence * 100 ))+"%</i>"
             }
         )
     }
@@ -99,17 +106,7 @@ window.onload = async function () {
     }
 }
 
-// function preload() {
-//     // Initialize the sentiment analysis model
-//     sentiment = ml5.sentiment("MovieReviews", () => {
-//     sentimentReady = true;
-//     console.log("sentiment model ready");
-//     });
-// }
 
-// function setup() {
-//     noCanvas();
-// }
 
 async function getSentiment() {
     console.log("getSentiment -> "+sentimentReady);
@@ -132,10 +129,18 @@ async function getSentiment() {
     
     
 
-    if (prediction && typeof prediction.score === "number") {
-        sentimentResult = prediction.score; // store if you need it
-        console.log("sentiment score:", prediction.score);
+    if (prediction && typeof prediction.confidence === "number") {
+        sentimentResult = prediction.confidence; // store if you need it
+        console.log("sentiment score:", prediction.confidence);
     }
+
+
+
+    console.log("worked, Sentiment confidence: " + prediction.confidence);
+
+    return prediction;
+}
+
 
     // function predictCallback() {
     //     console.log("worked, Sentiment confidence: " + prediction.confidence);
@@ -143,7 +148,14 @@ async function getSentiment() {
         
     // }
 
-    console.log("worked, Sentiment confidence: " + prediction.confidence);
-    
-    return prediction;
-}
+    // function preload() {
+//     // Initialize the sentiment analysis model
+//     sentiment = ml5.sentiment("MovieReviews", () => {
+//     sentimentReady = true;
+//     console.log("sentiment model ready");
+//     });
+// }
+
+// function setup() {
+//     noCanvas();
+// }

@@ -20,10 +20,19 @@
                         <button class = "button_class" id = "start-button">Begin</button>
                 </div>
         </div>
+        <!-- buffer container -->
+                <!-- Will only appear when the button is clicked -->
+        <div id = "await-result">
+                <div class = "card">
+                        <p>processing entry.... please wait</p>
+                </div>
+        </div>
+
+
         <!-- Will only appear when the button is clicked -->
         <div id = "form-result">
                 <div class = "card">
-                        <p>Your entry was <i>percentage to insert</i> positive, we will have a few more variables to modify this message.</p>
+                        <p>Your entry was <i id = "percentageToInsert">percentage to insert</i> positive, we will have a few more variables to modify this message.</p>
                 </div>
                 <div class = "button-container">
                         <button class = "button_class" id = "newentry-button">Write another entry</button>
