@@ -6,6 +6,7 @@ let time;
 let sentiment;
 let sentimentResult;
 let sentimentReady = false;
+let prediction 
 
 window.onload = async function () {
 
@@ -61,7 +62,7 @@ window.onload = async function () {
                 const formData = new FormData(event.target);
                 username = formData.get("username");
                 entry = formData.get("journalEntry");
-                console.log( entry + " Entry being judged");
+                // console.log( entry + " Entry being judged");
                 
                 lastUsername = username || "";
                 
@@ -70,9 +71,18 @@ window.onload = async function () {
                 formContainer.style.display = "none";
                 event.target.reset();
 
+
+
+
+
                 // clear entry but keep name
                 if (lastUsername && usernameInput) usernameInput.value = lastUsername;
-                getSentiment();
+                let sentimentValue = await getSentiment();
+
+                                //check predictions work in different scope, also find what values to take?
+                console.log("prediction object:"+ prediction);
+                console.log("prediction score:"+ prediction.score);
+                console.log("prediction confidence:"+ prediction.confidence);
             }
         )
     }
@@ -102,7 +112,7 @@ window.onload = async function () {
 // }
 
 async function getSentiment() {
-    console.log(sentimentReady);
+    console.log("getSentiment -> "+sentimentReady);
 
     //edge case checks
     if (!sentimentReady || !sentiment){
@@ -113,25 +123,27 @@ async function getSentiment() {
         console.log("no entry");
         return;
     }
-    console.log("through cases");
+    // console.log("through cases");
     
     
 
-    let prediction = await sentiment.predict(entry);
-    console.log("prediction object:"+ prediction);
-    console.log("prediction score:"+ prediction.score);
-    console.log("prediction confidence:"+ prediction.confidence);
+    prediction = await sentiment.predict(entry);
+    console.log("prediction finished");
+    
+    
 
     if (prediction && typeof prediction.score === "number") {
         sentimentResult = prediction.score; // store if you need it
         console.log("sentiment score:", prediction.score);
     }
 
-function predictCallback() {
+    // function predictCallback() {
+    //     console.log("worked, Sentiment confidence: " + prediction.confidence);
+    //     return;
+        
+    // }
+
     console.log("worked, Sentiment confidence: " + prediction.confidence);
-    return;
     
-}
-
-
+    return prediction;
 }
