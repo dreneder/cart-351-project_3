@@ -6,9 +6,9 @@ let time;
 let sentiment;
 let sentimentResult;
 let sentimentReady = false;
-let prediction 
-let sentences 
-let sentenceSentiment
+let prediction; 
+let sentences;
+let sentenceSentiment;
 
 
 window.onload = async function () {
@@ -107,6 +107,13 @@ window.onload = async function () {
                 console.log("______________________ sentence sentiment");
                 console.log(sentences);
                 console.log(sentenceSentiment);
+
+                // this is where information is being sent to mongoDB, OWEN MODIFY HERE AND IN THE PYTHON ROUTE IF NEEDED
+                fetch("/entries", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ entry, sentiment: prediction ? prediction.confidence : null, username: lastUsername })
+                }).catch((err) => console.error("failed to save entry", err));
 
 
                 // shows results

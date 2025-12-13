@@ -1,5 +1,5 @@
 #Importing and setting up the python document
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, jsonify
 from flask_pymongo import PyMongo
 import json
 import os
@@ -36,6 +36,28 @@ def submitEntry():
 @app.route("/collectiveEntries")
 def collectiveEntries():
      return render_template("collectiveEntries.html")
+
+# route to accept entry data from the JS
+@app.route("/entries", methods=["POST"])
+def entries():
+     payload = request.get_json(silent=True) or {}
+     if not payload:
+          return jsonify({"error": "No JSON payload provided"}), 400
+
+     username = (payload.get("username") or "").lower()
+
+     entry_doc = {
+          "entry": payload.get("entry"),
+          "sentiment": payload.get("sentiment"),
+          "username": username,
+          "datetime": datetime.utcnow(),
+     }
+
+     try:
+          result = mongo.db.project3.insert_one(entry_doc)
+          return jsonify({"inserted_id": str(result.inserted_id)}), 201
+     except Exception as exc:
+          return jsonify({"error": "Failed to save entry", "details": str(exc)}), 500
 
 #Running the application
 app.run(debug=True)
