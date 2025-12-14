@@ -59,5 +59,17 @@ def entries():
      except Exception as exc:
           return jsonify({"error": "Failed to save entry", "details": str(exc)}), 500
 
+@app.route("/get-entries", methods=["GET"])
+def get_entries():
+     try:
+          # Fetch all entries from MongoDB
+          entries = list(mongo.db.project3.find())
+          for entry in entries:
+               entry["_id"] = str(entry["_id"])
+               
+          return jsonify(entries), 200
+     except Exception as exc:
+          return jsonify({"error": "Failed to save entry", "details": str(exc)}), 500
+
 #Running the application
 app.run(debug=True)

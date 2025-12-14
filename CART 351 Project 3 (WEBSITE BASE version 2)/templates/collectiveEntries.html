@@ -1,6 +1,11 @@
 <!-- A child of base.html-->
 {% extends "base.html" %}
 
+{% block scriptBlock %}
+        <script src="{{url_for('static',filename='js/sentimentHelper.js')}}"></script>
+        <script src="{{url_for('static',filename='js/collective.js')}}"></script>
+{%endblock%}
+
 {% block content %}
    
 <section>
@@ -13,12 +18,12 @@
 </section>
 
 <div class = "button-container">
-        <button type = "button" class = "button_class">View Collection</button>
+        <button type = "button" class = "button_class" id = "viewCollectionButton">View Collection</button>
 </div>
 
-<div id = "journal holder">
+<div id = "journalHolder">
 
-        
+
 
 
 

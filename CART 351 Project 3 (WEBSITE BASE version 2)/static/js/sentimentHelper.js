@@ -1,18 +1,29 @@
-class name {
-    constructor(parameters) {
+class sentimentHelper {
+    
+    
+    constructor() {
         
     }
-/**
- * 
- */
 
+
+    // sentimentToColour(inSentiment) {
+    //     //returns HSB based on sentiment
+    //     //sets sentiment happy - medium - blue
+    //     //red to blue through purple
+    //     let colVal = 240 * (1 - inSentiment);
+    //     // PLAY AROUND W THIS COLOUR
+    //     let out = `hsl(${colVal}, ${60}%, ${90}%)`;
+    //     return out;
+    // }
     sentimentToColour(inSentiment) {
-        //returns HSB based on sentiment
-        //sets sentiment 0 --> blue
-        let colVal = ((inSentiment* 3.6) + 200)%360
-        let out = `hsl(${colVal}, ${45}%, ${100}%)`;
-        return out;
-    }
+    // 180° (cyan/teal) → 280° (purple) → 10° (red-orange/coral)
+    let colVal = inSentiment < 0.5
+        ? 180 + ((inSentiment) * 200)      // Teal to purple
+        : 280 + ((inSentiment - 0.5) * 100); // Purple wraps to coral
+    colVal = colVal % 360;
+    let out = `hsl(${colVal}, 65%, 82%)`;
+    return out;
+}
 
     sentimentToFont(inSentiment, elementRef) {
 
@@ -32,7 +43,7 @@ class name {
         elementRef.classList.remove("font-goudy");
         elementRef.classList.remove("font-andale");
         elementRef.classList.remove("font-avant-garde");
-        elementRef.classList.remove("font-optima ");
+        elementRef.classList.remove("font-optima");
         elementRef.classList.remove("font-brush-script");
 
 
@@ -50,7 +61,7 @@ class name {
         switch (condition) {
             case 0:
                 // out = "Goudy Old Style"
-                elementRef.classList.add("font-goudy");
+                
         
                 break;
 
@@ -66,7 +77,7 @@ class name {
 
             case 3:
                 // out = "Optima"
-                elementRef.classList.add("font-optima ");
+                elementRef.classList.add("font-optima");
                 break;
 
             case 4:
@@ -96,18 +107,22 @@ class name {
     // adds sentences to a parent block given the entry and the sentiment array
     addSentences(parentToAppend, entryText, sentimentArray){
         //create vars
-        let i = 0;
-        let sentences = parseString(entryText);
-        let children = Array[entryText.length]
+        let sentences = this.parseString(entryText);
+        let children = [];
 
+        console.log("Sentences:", sentences);
+        console.log("Sentiment Array:", sentimentArray);
 
         for (let i = 0; i < sentences.length; i++) {
+            console.log(`Sentiment for sentence ${i}:`, sentimentArray[i]);
+
             //loop for each sentence and matching sentiment value
-            parentToAppend.innerHTML +=  "<i id = \" entrySentence"+i+" \"> "+sentences[i]+"%</i>";
+            parentToAppend.innerHTML +=  "<i id =\"entrySentence"+i+"\"> "+sentences[i]+"</i>";
             //find the created element from parent block
-            let ref = parentToAppend.getElementById(" entrySentence"+i)
+            let ref = parentToAppend.querySelector("#entrySentence"+i)
+            ref.style.color = '#1D1E18'; 
             //add the font class to the sentence
-            sentimentToFont(sentimentArray[i+1], ref);
+            this.sentimentToFont(sentimentArray[i+1] *100, ref);
             children.push(ref)
 
 
@@ -115,6 +130,11 @@ class name {
 
         return children;
         //return array of children for ease of use later
+    }
+
+    testing() {
+        console.log("reached testing sentiment helper");
+            
     }
 
 

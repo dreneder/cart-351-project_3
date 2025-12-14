@@ -17,7 +17,7 @@ window.onload = async function () {
 
 
     
-    console.log("script loaded");
+    console.log("fromScript.js loaded");
 
     // contants for all elements being modified
     const startContainer = this.document.getElementById("start-container");
@@ -110,8 +110,8 @@ window.onload = async function () {
                 console.log(sentences);
                 console.log(sentenceSentiment);
 
-                //append the general sentiment to the start of sentenceSentiment
-                sentenceSentiment.push (prediction.confidence);
+                //append the general sentiment to the START of sentenceSentiment
+                sentenceSentiment.unshift(prediction.confidence);
 
                 // this is where information is being sent to mongoDB, OWEN MODIFY HERE AND IN THE PYTHON ROUTE IF NEEDED
                 fetch("/entries", {

@@ -186,26 +186,34 @@ footer{
     border-radius: 10px;
 }
 
+
+
+
+
+
+/* TO CHANGE ASPECTS ABT THE DIFFERENT STYLES BEING MAPPED TO */
 .font-goudy {
-  font-family: 'Goudy Old Style', serif;
+
+    font-family: 'Goudy Old Style', serif;
 }
 
 .font-andale {
-  font-family: 'Andale Mono', monospace;
+
+    font-family: 'Andale Mono', monospace;
 }
 
 .font-avant-garde {
-  font-family: 'Avant Garde', 'Century Gothic', sans-serif;
+    font-family: 'Avant Garde', 'Century Gothic', sans-serif;
 }
 
 .font-optima {
-  font-family: 'Optima', 'Segoe UI', sans-serif;
+    font-family: 'Optima', 'Segoe UI', sans-serif;
 }
 
 .font-brush-script {
-  font-family: 'Brush Script MT', cursive;
+    font-family: 'Brush Script MT', cursive;
 }
 
 .font-arial {
-  font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
 }
