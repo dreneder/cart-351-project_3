@@ -1,3 +1,5 @@
+
+// import sentimentToFormatHelper from './static.js';
 // variables for the name, entry, time and sentiment score
 let username;
 let lastUsername;
@@ -108,14 +110,18 @@ window.onload = async function () {
                 console.log(sentences);
                 console.log(sentenceSentiment);
 
+                //append the general sentiment to the start of sentenceSentiment
+                sentenceSentiment.push (prediction.confidence);
+
                 // this is where information is being sent to mongoDB, OWEN MODIFY HERE AND IN THE PYTHON ROUTE IF NEEDED
                 fetch("/entries", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ entry, sentiment: prediction ? prediction.confidence : null, username: lastUsername })
+                    body: JSON.stringify({ entry, sentiment: sentenceSentiment, username: lastUsername })
                 }).catch((err) => console.error("failed to save entry", err));
 
 
+                
                 // shows results
                 bufferContainer.style.display = "none";
                 resultContainer.style.display = "";
@@ -142,27 +148,27 @@ window.onload = async function () {
 
 
 //OLD
-function getSentiment() {
-// async function getSentiment() {
-    console.log("getSentiment -> "+sentimentReady);
+// function getSentiment() {
+// // async function getSentiment() {
+//     console.log("getSentiment -> "+sentimentReady);
 
-    //edge case checks
+//     //edge case checks
 
-    // console.log("through cases");
-    prediction = sentiment.predict(entry);
-    // prediction = await sentiment.predict(entry);
-    console.log("prediction finished");
+//     // console.log("through cases");
+//     prediction = sentiment.predict(entry);
+//     // prediction = await sentiment.predict(entry);
+//     console.log("prediction finished");
     
     
 
-    if (prediction && typeof prediction.confidence === "number") {
-        sentimentResult = prediction.confidence; // store if you need it
-        console.log("sentiment score:", prediction.confidence);
-    }
-    console.log("worked, Sentiment confidence: " + prediction.confidence);
+//     if (prediction && typeof prediction.confidence === "number") {
+//         sentimentResult = prediction.confidence; // store if you need it
+//         console.log("sentiment score:", prediction.confidence);
+//     }
+//     console.log("worked, Sentiment confidence: " + prediction.confidence);
 
-    return prediction;
-}
+//     return prediction;
+// }
 
 
 async function sentimentHelper(input) {
@@ -188,7 +194,12 @@ async function sentimentHelper(input) {
 
     // Wait for all promises to resolve
     console.log("waiting for all sentiment predictions");
-    await Promise.all([...sentimentPromises, mainSentimentPromise]);
+    await Promise.all([sentimentPromises, mainSentimentPromise]);
+
+
+    for (i=0; i<sentenceSentiment.length; i++) {
+        sentenceSentiment[i] = sentenceSentiment[i].confidence
+    }
 
     console.log("all sentiment predictions completed");
 }
@@ -198,7 +209,6 @@ function parseString(str) {
     // filter empty strings
     const segments = str.split(/[.,?!]/)
                         .filter(s => s.length > 0);
-    
     // console.log("Parsed segments:", segments);
     return segments;
 }
