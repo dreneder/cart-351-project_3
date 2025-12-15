@@ -36,6 +36,36 @@ def submitEntry():
 #The collective entries submit route
 @app.route("/collectiveEntries")
 def collectiveEntries():
+     docs = list(mongo.db.project3.find().sort("datetime", 1))
+     entries = []
+
+     for doc in docs:
+          raw_sentiment = doc.get("sentiment")
+          value = None
+          if isinstance(raw_sentiment, list) and raw_sentiment:
+               value = raw_sentiment[-1]
+          elif raw_sentiment is not None:
+               value = raw_sentiment
+
+          dt = doc.get("datetime")
+          dt_str = dt.isoformat() if dt else None
+
+          entries.append(
+               {
+                    "entry": doc.get("entry"),
+                    "username": doc.get("username"),
+                    "sentiment": value,
+                    "datetime": dt_str,
+               }
+          )
+
+     if entries:
+          latest = entries[-1]
+          # print(f"Latest entry datetime: {latest.get('datetime')} sentiment value: {latest.get('sentiment')}")
+
+     if request.args.get("format") == "json":
+          return jsonify(entries), 200
+
      return render_template("collectiveEntries.html")
 
 # route to accept entry data from the JS

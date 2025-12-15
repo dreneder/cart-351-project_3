@@ -33,6 +33,7 @@ if (allButton) {
         collectButtons.style.display = "none";
         welcomeCard.style.display = "none";
         journalHolder.style.display = "";
+        loadEntries().then((entries) => console.log("loaded entries:", entries));
     });
 };
 
@@ -67,4 +68,15 @@ function valueToColor(v) {
   }
 
   return `rgb(${r}, ${g}, ${b})`;
+}
+
+async function loadEntries() {
+  const res = await fetch("/collectiveEntries?format=json");
+  const data = await res.json();
+  return data.map(({ entry, username, sentiment, datetime }) => ({
+    entry,
+    username,
+    sentiment,
+    datetime,
+  }));
 }
