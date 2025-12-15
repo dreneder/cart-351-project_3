@@ -105,6 +105,46 @@ footer{
     max-width: 800px;
 }
 
+.entry_card{
+    background: #fff;
+    border-radius: 16px;
+    padding:2rem;
+    box-shadow: inset 0 0 10px 10px #ff0000;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.journal_table {
+    width: 100%;
+    background: #fff;
+    border: solid 2px #1D1E18;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding:1.5rem;
+    margin: 0 auto 2rem auto;
+    
+}
+
+.journal_holder {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.date_container {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.date_container p{
+    font-size: 20px;
+    margin: 0;
+}
+
+.date_center {
+    margin: 0 auto;
+}
+
 .text-container{
     display: flex;
     flex-direction: column;
