@@ -1,6 +1,10 @@
 <!-- A child of base.html-->
 {% extends "base.html" %}
 
+{% block scriptBlock %}
+        <script src="{{url_for('static',filename='js/collectScript.js')}}"></script>
+{% endblock scriptBlock %}
+
 {% block content %}
    
 <section>
@@ -8,15 +12,32 @@
 
         <h2><img height="200" src="static/images/CART_351_Collection_Page_Icon.png" class="pageIcon"></h2>
         <!-- Content for collective entries page -->
-        <div class = "card">
-        <p>Below lies the culmination of past journal entries. These results offer a window into the past and, perhaps, even a glimpse into the future.</div>
+        <div class = "card" id = "welcome_card">
+                <p>Below lies the culmination of past journal entries. These results offer a window into the past and, perhaps, even a glimpse into the future.</p>
+        </div>
 </section>
 
-<div class = "button-container">
-        <button type = "button" class = "button_class">View Collection</button>
+<div class = "button-container" id = "collect_buttons">
+        <button type = "button" class = "button_class" id = "all_collection">View General Collection</button>
+        <button type = "button" class = "button_class" id = "own_collection">View Your Own Collection</button>
 </div>
+<!-- Text container for journal entries-->
+<form id = "consult-form">
 
-<div id = "journal holder">
+        <div class = "form-container">
+        <div class = "text-container">
+
+                <label for = "username">Your name: </label>
+                <input id = "username" name = "username" required></input>
+        </div>
+
+        <div class = "button-container">
+                <button type = "submit" class = "button_class">Consult</button>
+        </div>
+        </div>
+</form>
+
+<div id = "journal_holder">
 
         
 

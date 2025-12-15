@@ -47,7 +47,7 @@
         <div class = "text-container">
 
                 <label for = "username">Your name: </label>
-                <input id = "username" name = "username" required></input>
+                <input id = "username" name = "username" value="{{ saved_username | default('') }}" required></input>
                 <label for = "journalEntry">Write your entry here: </label>
                 <textarea id = "journalEntry" name = "journalEntry" placeholder="Dear diary..." required></textarea>
         </div>

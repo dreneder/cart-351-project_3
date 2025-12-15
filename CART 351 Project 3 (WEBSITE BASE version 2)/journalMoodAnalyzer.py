@@ -1,5 +1,5 @@
 #Importing and setting up the python document
-from flask import Flask, render_template, Response, request, jsonify
+from flask import Flask, render_template, Response, request, jsonify, session
 from flask_pymongo import PyMongo
 import json
 import os
@@ -30,7 +30,8 @@ def home():
 #The journal entry submit route
 @app.route("/submitEntry", methods=["GET", "POST"])
 def submitEntry():
-     return render_template("submitEntry.html")
+     saved_username = session.get("username", "")
+     return render_template("submitEntry.html", saved_username=saved_username)
 
 #The collective entries submit route
 @app.route("/collectiveEntries")
@@ -52,6 +53,9 @@ def entries():
           "username": username,
           "datetime": datetime.utcnow(),
      }
+
+     if username:
+          session["username"] = username
 
      try:
           result = mongo.db.project3.insert_one(entry_doc)
