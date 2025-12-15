@@ -68,7 +68,7 @@ def collectiveEntries():
 
      return render_template("collectiveEntries.html")
 
-# route to accept entry data from the JS
+# route to accept entry data from the JS and send to MongoDB
 @app.route("/entries", methods=["POST"])
 def entries():
      payload = request.get_json(silent=True) or {}
