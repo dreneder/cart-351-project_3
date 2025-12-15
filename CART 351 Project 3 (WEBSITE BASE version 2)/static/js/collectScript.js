@@ -122,21 +122,20 @@ function renderEntries(entries, tableRow, cardContent, dateTime = {}) {
   tableRow.innerHTML = "";
   if (dateTime.selectDate) {
     dateTime.selectDate.innerHTML = "";
-    dateTime.selectDate.style.visibility = "hidden";
   }
 
   sorted.forEach((item) => {
     const td = document.createElement("td");
     td.className = "journal_cell"; // entry cell
-    td.innerHTML = "&nbsp;"; // empty visual, click target only
-    td.title = item.datetime || "entry"; // tooltip shows datetime
+    td.innerHTML = "&nbsp;"; // empty visual only for click target
+    td.title = item.datetime || "entry"; // shows datetime
     if (typeof item.sentiment === "number") {
       td.style.backgroundColor = valueToColor(item.sentiment); // color by sentiment
     }
     td.addEventListener("mouseenter", () => {
-      if (dateEls.selectDate) {
-        dateEls.selectDate.innerHTML = formatDateLabel(item.datetime); // center date label on hover
-        dateEls.selectDate.style.visibility = "visible";
+      if (dateTime.selectDate) {
+        dateTime.selectDate.innerHTML = formatDateLabel(item.datetime); // center date label on hover
+        dateTime.selectDate.style.visibility = "visible";
       }
     });
     td.addEventListener("click", () => {
@@ -147,6 +146,11 @@ function renderEntries(entries, tableRow, cardContent, dateTime = {}) {
         if (bg) {
           cardContent.style.boxShadow = `inset 0 0 10px 10px ${bg}`; // match selected cell color
         }
+      }
+      const positiveLevel = document.getElementById("positive_level");
+      if (positiveLevel) {
+        positiveLevel.innerHTML = `This entry is ${item.sentiment}% positive`;
+        positiveLevel.style.display = ""; // show sentiment label when card shows
       }
       console.log("sentiment value:", item.sentiment);
       if (dateTime.selectDate) dateTime.selectDate.innerHTML = formatDateLabel(item.datetime); // center date label
