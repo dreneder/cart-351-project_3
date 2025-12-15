@@ -36,6 +36,7 @@ def submitEntry():
 #The collective entries submit route
 @app.route("/collectiveEntries")
 def collectiveEntries():
+
      docs = list(mongo.db.project3.find().sort("datetime", 1))
      entries = []
 
@@ -54,7 +55,7 @@ def collectiveEntries():
                {
                     "entry": doc.get("entry"),
                     "username": doc.get("username"),
-                    "sentiment": value,
+                    "sentiment": raw_sentiment,
                     "datetime": dt_str,
                }
           )
@@ -76,6 +77,11 @@ def entries():
           return jsonify({"error": "No JSON payload provided"}), 400
 
      username = (payload.get("username") or "").lower()
+
+     print("payload")
+     print(payload)
+     print("sentiment")
+     print(payload.get("sentiment"))
 
      entry_doc = {
           "entry": payload.get("entry"),

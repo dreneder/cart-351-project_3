@@ -107,7 +107,7 @@ async function loadEntries() {
   return data.map(({ entry, username, sentiment, datetime }) => ({
     entry,
     username,
-    sentiment: convertSentiment(sentiment),
+    sentiment: sentiment.map(s => parseFloat(s)),
     datetime,
   }));
 }
@@ -132,8 +132,8 @@ function renderEntries(entries, tableRow, cardContent, dateTime = {}) {
     td.className = "journal_cell"; // entry cell
     td.innerHTML = "&nbsp;"; // empty visual only for click target
     td.title = item.datetime || "entry"; // shows datetime
-    if (typeof item.sentiment === "number") {
-      td.style.backgroundColor = valueToColor(item.sentiment); // color by sentiment
+    if (typeof item.sentiment[0] === "number") {
+      td.style.backgroundColor = valueToColor(item.sentiment[0]*100); // color by sentiment
     }
     td.addEventListener("mouseenter", () => {
       if (dateTime.selectDate) {
@@ -145,24 +145,21 @@ function renderEntries(entries, tableRow, cardContent, dateTime = {}) {
       if (cardContent) {
         cardContent.innerHTML = ""
         cardContent.style.display = ""; // reveal entry card
-        cardContent.textContent = item.entry || "(no entry text)"; // entry body
-
-
-
+        // cardContent.textContent = item.entry || "(no entry text)"; // entry body
         //set sentences with helper function instead
-        // formatter.addSentences(cardContent,item.entry,item.sentiment);
+        formatter.addSentences(cardContent,item.entry,item.sentiment);
 
-        const bg = typeof item.sentiment === "number" ? valueToColor(item.sentiment) : "";
+        const bg = typeof item.sentiment[0] === "number" ? valueToColor(item.sentiment[0]*100) : "";
         if (bg) {
           cardContent.style.boxShadow = `inset 0 0 10px 10px ${bg}`; // match selected cell color
         }
       }
       const positiveLevel = document.getElementById("positive_level");
       if (positiveLevel) {
-        positiveLevel.innerHTML = `This entry is ${item.sentiment}% positive`;
+        positiveLevel.innerHTML = `This entry is ${Math.round(item.sentiment[0]*100)}% positive`;
         positiveLevel.style.display = ""; // show sentiment label when card shows
       }
-      console.log("sentiment value:", item.sentiment);
+      console.log("sentiment values:", item.sentiment);
       if (dateTime.selectDate) dateTime.selectDate.innerHTML = formatDateLabel(item.datetime); // center date label
     });
     tableRow.appendChild(td); // add cell to row
