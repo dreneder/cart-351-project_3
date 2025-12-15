@@ -61,8 +61,7 @@ class sentimentHelper {
         switch (condition) {
             case 0:
                 // out = "Goudy Old Style"
-                
-        
+                elementRef.classList.add("font-goudy");
                 break;
 
             case 1:
@@ -122,7 +121,7 @@ class sentimentHelper {
             let ref = parentToAppend.querySelector("#entrySentence"+i)
             ref.style.color = '#1D1E18'; 
             //add the font class to the sentence
-            this.sentimentToFont(sentimentArray[i+1] *100, ref);
+            this.sentimentToFont(sentimentArray[i] *100, ref);
             children.push(ref)
 
 

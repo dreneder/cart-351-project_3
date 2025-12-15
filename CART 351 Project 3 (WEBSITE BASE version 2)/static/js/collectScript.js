@@ -1,6 +1,7 @@
 // variable for the color management
 let colorValue;
 let entriesCache = [];
+let formatter = new sentimentHelper();
 
 window.onload = async function () {
 
@@ -22,6 +23,8 @@ window.onload = async function () {
     const startDate = this.document.getElementById("start_date");
     const selectDate = this.document.getElementById("select_date");
     const endDate = this.document.getElementById("end_date");
+
+    let TempTextPointers
 
 
     if (formContainer) formContainer.style.display = "none";
@@ -140,8 +143,15 @@ function renderEntries(entries, tableRow, cardContent, dateTime = {}) {
     });
     td.addEventListener("click", () => {
       if (cardContent) {
+        cardContent.innerHTML = ""
         cardContent.style.display = ""; // reveal entry card
         cardContent.textContent = item.entry || "(no entry text)"; // entry body
+
+
+
+        //set sentences with helper function instead
+        // formatter.addSentences(cardContent,item.entry,item.sentiment);
+
         const bg = typeof item.sentiment === "number" ? valueToColor(item.sentiment) : "";
         if (bg) {
           cardContent.style.boxShadow = `inset 0 0 10px 10px ${bg}`; // match selected cell color

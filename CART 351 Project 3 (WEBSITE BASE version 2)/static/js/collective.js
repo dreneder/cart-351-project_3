@@ -11,8 +11,8 @@ let bookshelf
 
 window.onload = async function () {
     console.log("collective.js loaded");
-    let startButton = this.document.getElementById("viewCollectionButton");
-    bookshelf = this.document.getElementById("journalHolder");
+    let startButton = this.document.getElementById("all_collection");
+    bookshelf = this.document.getElementById("journal_holder");
     console.log("Bookshelf:", bookshelf);
     
 
