@@ -1,5 +1,5 @@
 #Importing and setting up the python document
-from flask import Flask, render_template, Response, request, jsonify
+from flask import Flask, render_template, Response, request, jsonify, session
 from flask_pymongo import PyMongo
 import json
 import os
@@ -30,14 +30,45 @@ def home():
 #The journal entry submit route
 @app.route("/submitEntry", methods=["GET", "POST"])
 def submitEntry():
-     return render_template("submitEntry.html")
+     saved_username = session.get("username", "")
+     return render_template("submitEntry.html", saved_username=saved_username)
 
 #The collective entries submit route
 @app.route("/collectiveEntries")
 def collectiveEntries():
+     docs = list(mongo.db.project3.find().sort("datetime", 1))
+     entries = []
+
+     for doc in docs:
+          raw_sentiment = doc.get("sentiment")
+          value = None
+          if isinstance(raw_sentiment, list) and raw_sentiment:
+               value = raw_sentiment[-1]
+          elif raw_sentiment is not None:
+               value = raw_sentiment
+
+          dt = doc.get("datetime")
+          dt_str = dt.isoformat() if dt else None
+
+          entries.append(
+               {
+                    "entry": doc.get("entry"),
+                    "username": doc.get("username"),
+                    "sentiment": value,
+                    "datetime": dt_str,
+               }
+          )
+
+     if entries:
+          latest = entries[-1]
+          # print(f"Latest entry datetime: {latest.get('datetime')} sentiment value: {latest.get('sentiment')}")
+
+     if request.args.get("format") == "json":
+          return jsonify(entries), 200
+
      return render_template("collectiveEntries.html")
 
-# route to accept entry data from the JS
+# route to accept entry data from the JS and send to MongoDB
 @app.route("/entries", methods=["POST"])
 def entries():
      payload = request.get_json(silent=True) or {}
@@ -52,6 +83,9 @@ def entries():
           "username": username,
           "datetime": datetime.utcnow(),
      }
+
+     if username:
+          session["username"] = username
 
      try:
           result = mongo.db.project3.insert_one(entry_doc)

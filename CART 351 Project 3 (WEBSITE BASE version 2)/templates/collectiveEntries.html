@@ -2,9 +2,8 @@
 {% extends "base.html" %}
 
 {% block scriptBlock %}
-        <script src="{{url_for('static',filename='js/sentimentHelper.js')}}"></script>
-        <script src="{{url_for('static',filename='js/collective.js')}}"></script>
-{%endblock%}
+        <script src="{{url_for('static',filename='js/collectScript.js')}}"></script>
+{% endblock scriptBlock %}
 
 {% block content %}
    
@@ -13,21 +12,53 @@
 
         <h2><img height="200" src="static/images/CART_351_Collection_Page_Icon.png" class="pageIcon"></h2>
         <!-- Content for collective entries page -->
-        <div class = "card">
-        <p>Below lies the culmination of past journal entries. These results offer a window into the past and, perhaps, even a glimpse into the future.</div>
+        <div class = "card" id = "welcome_card">
+                <p>Here lies the culmination of past journal entries. These results offer a window into the past and, perhaps, even a glimpse into the future.</p>
+        </div>
 </section>
 
-<div class = "button-container">
-        <button type = "button" class = "button_class" id = "viewCollectionButton">View Collection</button>
+<div class = "button-container" id = "collect_buttons">
+        <button type = "button" class = "button_class" id = "all_collection">View General Collection</button>
+        <button type = "button" class = "button_class" id = "own_collection">View Your Own Collection</button>
 </div>
+<!-- Text container for journal entries-->
+<form id = "consult-form">
 
-<div id = "journalHolder">
+        <div class = "form-container">
+        <div class = "text-container">
+
+                <label for = "username">Your name: </label>
+                <input id = "username" name = "username" required></input>
+        </div>
+
+        <div class = "button-container">
+                <button type = "submit" class = "button_class">Consult</button>
+        </div>
+        </div>
+</form>
+<div class = "journal_holder" id = "journal_holder">
+        <div>
+                <div class="date_container">
+                        <div><p id="start_date"></div>
+                        <div class="date_center"><p id="select_date"></div>
+                        <div><p id="end_date"></p></div>
+                </div>
+                <table class="journal_table">
+                        <tbody>
+                                <tr>
+
+                                </tr>
+                        </tbody>
+                </table>
+
+        </div>
+        <h2 style="font-size:30px; display:none;" id = "positive_level">This entry is % positive</h2>
+
+        <div class="entry_card" id="entry_card">
 
 
 
-
-
-
+        </div>
 </div>
 
 {% endblock %}

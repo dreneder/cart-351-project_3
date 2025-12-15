@@ -32,7 +32,7 @@
         <!-- Will only appear when the button is clicked -->
         <div id = "form-result">
                 <div class = "card">
-                        <p>Your entry was <i id = "percentageToInsert">percentage to insert</i> positive, we will have a few more variables to modify this message.</p>
+                        <p>Your entry was <i id = "percentageToInsert">percentage to insert</i> positive.</p>
                 </div>
                 <div class = "button-container">
                         <button class = "button_class" id = "newentry-button">Write another entry</button>
@@ -47,7 +47,7 @@
         <div class = "text-container">
 
                 <label for = "username">Your name: </label>
-                <input id = "username" name = "username" required></input>
+                <input id = "username" name = "username" value="{{ saved_username | default('') }}" required></input>
                 <label for = "journalEntry">Write your entry here: </label>
                 <textarea id = "journalEntry" name = "journalEntry" placeholder="Dear diary..." required></textarea>
         </div>
