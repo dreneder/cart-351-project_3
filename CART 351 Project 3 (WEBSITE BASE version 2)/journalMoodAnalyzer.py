@@ -112,4 +112,5 @@ def get_entries():
           return jsonify({"error": "Failed to save entry", "details": str(exc)}), 500
 
 #Running the application
-app.run(debug=True)
+# app.run(debug=True) # for development only
+app.run() # for vercel deployment

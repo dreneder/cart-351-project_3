@@ -1,0 +1,4 @@
+{
+    "builds": [{ "src": "journalMoodAnalyzer.py", "use": "@vercel/python" }],
+    "routes": [{ "src": "/(.*)", "dest": "journalMoodAnalyzer.py" }]
+}
