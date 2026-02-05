@@ -114,4 +114,4 @@ def get_entries():
 #Running the application
 # app.run(debug=True) # for development only
 if __name__== '__main__':
-     app.run() # for vercel deployment
+     app.run(debug=(True)) # for vercel deployment
