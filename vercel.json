@@ -1,5 +1,14 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/CART_351_project_3/journalMoodAnalyzer" }
-  ]
+    "builds": [
+        {
+            "src": "./CART_351_project_3/journalMoodAnalyzer.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/CART_351_project_3/journalMoodAnalyzer.py"
+        }
+    ]
 }
